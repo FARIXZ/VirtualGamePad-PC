@@ -53,6 +53,15 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 if(WIN32)
     # Include CppWinRT setup for Windows
     include(CppWinRT)
+
+    # Fetch ViGEmClient SDK
+    include(FetchContent)
+    FetchContent_Declare(
+        ViGEmClient
+        GIT_REPOSITORY https://github.com/nefarius/ViGEmClient.git
+        GIT_TAG        master
+    )
+    FetchContent_MakeAvailable(ViGEmClient)
 elseif(LINUX)
     # Include Linux input dependencies
     include(LinuxInput)
@@ -149,6 +158,8 @@ if(WIN32)
     target_link_libraries(VGamepadPC PRIVATE
         cppwinrt
         WindowsApp
+        ViGEmClient
+        setupapi
     )
 elseif(LINUX)
     target_link_libraries(VGamepadPC PRIVATE

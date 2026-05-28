@@ -9,6 +9,10 @@
 #include <winrt/Windows.UI.Input.Preview.Injection.h>
 #include <winrt/base.h>
 
+// ViGEm Client SDK includes
+#include <windows.h>
+#include <ViGEm/Client.h>
+
 using winrt::Windows::UI::Input::Preview::Injection::InjectedInputGamepadInfo;
 using winrt::Windows::UI::Input::Preview::Injection::InputInjector;
 using WinRTGamepadButtons = winrt::Windows::Gaming::Input::GamepadButtons;
@@ -40,6 +44,12 @@ class GamepadInjector
 #ifdef _WIN32
 	InjectedInputGamepadInfo gamepadState;
 	InputInjector injector;
+
+	// ViGEm Emulation state
+	PVIGEM_CLIENT vigemClient = nullptr;
+	PVIGEM_TARGET vigemTarget = nullptr;
+	XUSB_REPORT vigemReport;
+	bool useViGEm = false;
 #elif defined(__linux__)
 	std::unique_ptr<libevdev, void (*)(libevdev *)> dev;
 	std::unique_ptr<libevdev_uinput, void (*)(libevdev_uinput *)> uidev;

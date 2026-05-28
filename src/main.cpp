@@ -2,6 +2,10 @@
 #include "platform/windows/console.hpp"
 #include "ui/mainwindow.hpp"
 
+#ifdef _WIN32
+#include <winrt/base.h>
+#endif
+
 #include <QApplication>
 #include <QDir>
 #include <QFile>

@@ -57,19 +57,27 @@ Server::Server(QWidget *parent) : QWidget(parent), ui(new Ui::Server)
 	tcpServer = new QTcpServer(this);
 	isGamepadConnected = false;
 
-	// Initialize the executor with try-catch for better error handling
-	switch (ExecutorType executorType = SettingsSingleton::instance().executorType())
+	// Initialize the executor
+	try
 	{
-	case ExecutorType::GamepadExecutor:
-		executor = std::make_unique<GamepadExecutor>();
-		qInfo() << "GamepadExecutor initialized successfully";
-		break;
-	case ExecutorType::KeyboardMouseExecutor:
-		executor = std::make_unique<KeyboardMouseExecutor>();
-		qInfo() << "KeyboardMouseExecutor initialized successfully";
-		break;
-	default:
-		qCritical() << "Unknown executor type";
+		switch (ExecutorType executorType = SettingsSingleton::instance().executorType())
+		{
+		case ExecutorType::GamepadExecutor:
+			executor = std::make_unique<GamepadExecutor>();
+			qInfo() << "GamepadExecutor initialized successfully";
+			break;
+		case ExecutorType::KeyboardMouseExecutor:
+			executor = std::make_unique<KeyboardMouseExecutor>();
+			qInfo() << "KeyboardMouseExecutor initialized successfully";
+			break;
+		default:
+			qCritical() << "Unknown executor type";
+		}
+	}
+	catch (...)
+	{
+		delete ui;
+		throw;
 	}
 
 	initServer();
