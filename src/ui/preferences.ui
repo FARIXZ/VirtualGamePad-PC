@@ -96,7 +96,7 @@
           <item>
            <widget class="QRadioButton" name="gamepadExecutorRadio">
             <property name="text">
-             <string>Virtual Gamepad (Experimental on Windows)</string>
+             <string>Virtual Gamepad</string>
             </property>
             <property name="checked">
              <bool>true</bool>
